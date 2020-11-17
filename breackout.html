@@ -1,11 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Breackout</title>
-</head>
-<body>
-    
-</body>
+  </head>
+  <body>
+    <canvas
+      id="canvas"
+      height="300"
+      style="border: 1px solid black; border-bottom: 2px solid rgb(255, 0, 0)"
+    ></canvas>
+    <button onclick="startGame()">Start Game</button>
+    <script>
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      const canvasH = canvas.height;
+      const canvasW = canvas.width;
+      let x, y, dx, dy, radius, interval;
+      let paddleW = 30;
+      let paddleX = canvas.width / 2 - paddleW/2;
+      let paddleH = 10;
+      let paddleY = canvas.height - paddleH;
+      setVariables();
+      drawBall();
+      drawPaddle();
+
+      function detectCollision() {
+        if ((x + dx) >= canvasW || (x + dx) < 0) {
+          dx = -dx;
+        }
+        if(y+dy > canvasH - radius){
+            if ((x + dx) > paddleX && (x + dx) < (paddleX+paddleW) ){
+            dy=-dy
+        }
+        }
+          if (y + dy < 0) {
+            dy = -dy;
+          }
+      }
+
+      function startGame() {
+        interval = setInterval(() => {
+          detectCollision();
+          x = x + dx;
+          y = y + dy;
+          checkGameOver();
+          ctx.clearRect(0, 0, canvasW, canvasH);
+          drawBall();
+          drawPaddle();
+        }, 20);
+      }
+
+      function checkGameOver() {
+        if (y === canvasH - radius) {
+          alert("game over");
+          clearInterval(interval);
+          setVariables();
+        }
+      }
+
+      function setVariables() {
+        x = canvasW / 2;
+        y = canvasH - 20;
+        dx = 5;
+        dy = -5;
+        radius=10
+      }
+
+      function drawBall() {
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
+        ctx.fillStyle = "#bc6ff1";
+        ctx.fill();
+        ctx.closePath();
+      }
+
+      function drawPaddle() {
+        ctx.beginPath();
+        ctx.rect(paddleX, paddleY, paddleW, paddleH);
+        ctx.fillStyle = "#892cdc";
+        ctx.fill();
+        ctx.closePath();
+      }
+    </script>
+  </body>
 </html>
