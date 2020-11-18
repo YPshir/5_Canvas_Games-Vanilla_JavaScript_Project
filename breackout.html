@@ -6,56 +6,171 @@
     <title>Breackout</title>
   </head>
   <body>
+    <button onclick="startGame()">Start Game</button>
     <canvas
       id="canvas"
       height="300"
       style="border: 1px solid black; border-bottom: 2px solid rgb(255, 0, 0)"
     ></canvas>
-    <button onclick="startGame()">Start Game</button>
     <script>
       const canvas = document.getElementById("canvas");
       const ctx = canvas.getContext("2d");
       const canvasH = canvas.height;
       const canvasW = canvas.width;
-      let x, y, dx, dy, radius, interval;
-      let paddleW = 30;
-      let paddleX = canvas.width / 2 - paddleW/2;
-      let paddleH = 10;
-      let paddleY = canvas.height - paddleH;
+
+      let rightPressed = false;
+      let leftPressed = false;
+
+      let x,
+        y,
+        dx,
+        dy,
+        radius,
+        interval,
+        paddleW,
+        paddleX,
+        paddleH,
+        paddleY,
+        bricks = [],
+        brickW,
+        brickH,
+        brickOffset,
+        score = 0;
+
       setVariables();
       drawBall();
       drawPaddle();
+      paddleNavigation();
+      createBrickArray();
+      drawBricks();
+      drawScore();
+
+      function drawScore() {
+        ctx.beginPath();
+        ctx.fillStyle = "black";
+        ctx.fill();
+        ctx.fillText("Score: " + score, 9, 10);
+        ctx.closePath();
+      }
+
+      function createBrickArray() {
+        for (i = 0; i < 3; i++) {
+          bricks[i] = [];
+          for (let j = 0; j < 6; j++) {
+            bricks[i][j] = { x: 0, y: 0, isVisible: true };
+          }
+        }
+      }
+
+      function drawBricks() {
+        for (i = 0; i < 3; i++) {
+          for (let j = 0; j < 6; j++) {
+            if (bricks[i][j].isVisible) {
+              const brickX = 10 + j * (brickW + brickOffset);
+              const brickY = (i + 1) * (10 + brickOffset);
+              bricks[i][j].x = brickX;
+              bricks[i][j].y = brickY;
+              ctx.beginPath();
+              ctx.rect(brickX, brickY, brickW, brickH);
+              ctx.fillStyle = "#892cdc";
+              ctx.fill();
+              ctx.stroke();
+              ctx.closePath();
+            }
+          }
+        }
+      }
+
+      function paddleNavigation() {
+        document.addEventListener("keydown", handleKeyDown);
+        document.addEventListener("keyup", handleKeyUp);
+
+        function handleKeyDown(e) {
+          if (e.key === "ArrowRight") {
+            rightPressed = true;
+          }
+          if (e.key === "ArrowLeft") {
+            leftPressed = true;
+          }
+        }
+        function handleKeyUp(e) {
+          if (e.key === "ArrowRight") {
+            rightPressed = false;
+          }
+          if (e.key === "ArrowLeft") {
+            leftPressed = false;
+          }
+        }
+      }
 
       function detectCollision() {
-        if ((x + dx) >= canvasW || (x + dx) < 0) {
+        if (x + dx >= canvasW || x + dx < 0) {
           dx = -dx;
         }
-        if(y+dy > canvasH - radius){
-            if ((x + dx) > paddleX && (x + dx) < (paddleX+paddleW) ){
-            dy=-dy
-        }
-        }
-          if (y + dy < 0) {
+        if (y + dy > canvasH - radius) {
+          if (x + dx > paddleX && x + dx < paddleX + paddleW) {
             dy = -dy;
+            dx = dx + (x + dx - paddleX) / 100;
           }
+        }
+        if (y + dy < 0) {
+          dy = -dy;
+        }
+        for (let b = 0; b < bricks.length; b++) {
+          for (i = 0; i < bricks[b].length; i++) {
+            const brick = bricks[b][i];
+            if (brick.isVisible) {
+              if (
+                x > brick.x &&
+                x < brick.x + brickW &&
+                y > brick.y &&
+                y < brick.y + brickH
+              ) {
+                bricks[b][i].isVisible = false;
+                score = score + 1;
+                dy = -dy;
+                checkWon();
+              }
+            }
+          }
+        }
       }
 
       function startGame() {
-        interval = setInterval(() => {
-          detectCollision();
-          x = x + dx;
-          y = y + dy;
-          checkGameOver();
-          ctx.clearRect(0, 0, canvasW, canvasH);
-          drawBall();
-          drawPaddle();
-        }, 20);
+        if (!interval) {
+          interval = setInterval(() => {
+            if (rightPressed) {
+              paddleX = paddleX + 5;
+            }
+            if (leftPressed) {
+              paddleX = paddleX - 5;
+            }
+            detectCollision();
+            x = x + dx;
+            y = y + dy;
+            checkGameOver();
+            ctx.clearRect(0, 0, canvasW, canvasH);
+            drawBall();
+            drawPaddle();
+            drawBricks();
+            drawScore();
+          }, 20);
+        }
       }
 
       function checkGameOver() {
-        if (y === canvasH - radius) {
+        if (y === canvasH) {
           alert("game over");
           clearInterval(interval);
+          interval = null;
+          setVariables();
+        }
+      }
+      function checkWon() {
+        if (score === 18) {
+          alert("YOU WON!");
+          clearInterval(interval);
+          interval = null;
           setVariables();
         }
       }
@@ -65,7 +180,18 @@
         y = canvasH - 20;
         dx = 5;
         dy = -5;
-        radius=10
+        radius = 10;
+
+        paddleW = 50;
+        paddleX = canvas.width / 2 - paddleW / 2;
+        paddleH = 10;
+        paddleY = canvas.height - paddleH;
+
+        brickW = 40;
+        brickH = 10;
+        brickOffset = 8;
+
+        score = 0;
       }
 
       function drawBall() {
