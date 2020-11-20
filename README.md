@@ -4,45 +4,36 @@
 
 # 5 Games - Vanilla JavaScript Project
 HTML , CSS and Vanilla JavaScript - 5 basic Games For learning purpose  
-[Click for display live](https://codepen.io/collection/Xbeoje) // leshanot
+[Click for display live](https://codepen.io/collection/DoVZQG) 
 
 ![Webp net-gifmaker (1)](https://user-images.githubusercontent.com/46241467/99301171-3bc50c00-2856-11eb-8fb2-9565e7cfabc8.gif)
 
 
 ## I. Breakout Game
+<img width="184" alt="1" src="https://user-images.githubusercontent.com/46241467/99563558-0ba27800-29d2-11eb-98cf-8f3dd8f631c4.png">
+
 HTML , CSS and Vanilla JavaScript game
 
 
 ### Live Demo
-[Code in CodePen](https://codepen.io/shir-izhak/pen/zYBMoRZ)
+[Code in CodePen](https://codepen.io/shir-izhak/pen/yLJrZQR)
 
 ### ABOUTE
 In Breakout, a layer of bricks lines the top third of the screen and the goal is to destroy them all. A ball moves straight around the screen, bouncing off the top and two sides of the screen. When a brick is hit, the ball bounces back and the brick is destroyed. The player loses a turn when the ball touches the bottom of the screen; to prevent this from happening, the player has a horizontally movable paddle to bounce the ball upward, keeping it in play. 
 
   
-## II. Whack-A-Mole
+## II. Snake
+
+// pic
 JavaScript, HTML and CSS grid-based game
 
 
 ### Live Demo
-[Code in CodePen](https://codepen.io/shir-izhak/pen/Pozxbmx) 
+[Code in CodePen](https://codepen.io/shir-izhak/pen/Pozxbmx) // leshanot
 
 ### ABOUTE
-The player needs to hit the grid with the mole in as many times as possible until the time runs out.
+The player controls a long, thin creature, resembling a snake, which roams around on a bordered plane, picking up food (or some other item), trying to avoid hitting its own tail or the "walls" that surround the playing area. Each time the snake eats a piece of food, its tail grows longer, making the game increasingly difficult. The user controls the direction of the snake's head (up, down, left, or right), and the snake's body follows. The player cannot stop the snake from moving while the game is in progress.
  
-### Features:
-##### HTML
-##### CSS
-##### JavaScript:
-###### document.querySelector()
-###### textContent
-###### forEach
-###### addEventListener()
-###### setInterval()
-###### classList.add()
-###### classList.contains()
-###### Arrow functions   
-
   
 ## III. Connect-Four
 JavaScript, HTML and CSS grid-based game
