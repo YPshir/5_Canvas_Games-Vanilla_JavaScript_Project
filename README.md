@@ -2,7 +2,7 @@
 # IN PROCESS!!!
 
 
-# 5 Games - Vanilla JavaScript Project
+# 5 Canvas Games - Vanilla JavaScript Project
 HTML , CSS and Vanilla JavaScript - 5 basic Games For learning purpose  
 [Click for display live](https://codepen.io/collection/DoVZQG) 
 
