@@ -6,12 +6,19 @@
     <title>Snake</title>
   </head>
   <body>
-    <canvas
-      id="canvas"
-      width="300"
-      height="300"
-      style="border: 1px solid black"
-    ></canvas>
+      <div style="display: flex; margin: 100px auto; width: fit-content;">
+            <canvas
+            id="canvas"
+            width="300"
+            height="300"
+            style="border: 1px solid black"
+        ></canvas>
+    
+        <div style="margin-left: 100px;">
+            <p>Score:</p>
+            <ol id="scoreOl"></ol>
+        </div>
+      </div>
 
     <script>
       const canvas = document.getElementById("canvas");
@@ -33,6 +40,12 @@
       moveSnake();
       randomFood();
       snakeNavigation();
+      showScore();
+
+      function showScore(){
+          const scoreOl = document.getElementById("scoreOl");
+          scoreOl.innerHTML = rounds.map(round=>`<li>Score: ${round.score}</li>`).join(" ")
+      }
 
       function setVariables(){
         interval = null
@@ -41,7 +54,6 @@
         rightPressed = leftPressed = upPressed = downPressed = false;
         snake = [{ x: 10, y: 10 }];
         score = 0;
-        rounds = [];
       }
 
       function randomFood() {
@@ -93,6 +105,8 @@
 
       function reset() {
         clearInterval(interval);
+        rounds.push({score});
+        showScore();
         setVariables();
         randomFood();
         moveSnake();
