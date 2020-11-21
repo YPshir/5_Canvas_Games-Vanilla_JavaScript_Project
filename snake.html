@@ -88,15 +88,15 @@
             drawSnake();
             drawFood();
             drawScore();
-          }, 200);
+          }, 100);
         }
       }
 
       function collisionDetection() {
-          const leftCollision = (snake[0].x <= 0);
-          const rightCollision = (snake[0].x >= canvasW);
-          const topCollision = (snake[0].y <= 0);
-          const bottomCollision = (snake[0].y >= canvasH);
+          const leftCollision = snake[0].x <= 0;
+          const rightCollision = snake[0].x >= canvasW;
+          const topCollision = snake[0].y <= 0;
+          const bottomCollision = snake[0].y >= canvasH;
         if (rightCollision || leftCollision || topCollision || bottomCollision) {
           alert("game over");
           reset();
