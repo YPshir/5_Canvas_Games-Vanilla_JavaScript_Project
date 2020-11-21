@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ping-Pong</title>
+  </head>
+  <body>
+    <div style="display: flex; margin: 100px auto; width: fit-content">
+      <canvas
+        id="canvas"
+        width="300"
+        height="300"
+        style="border: 1px solid black"
+      ></canvas>
+      <!-- 
+    <div style="margin-left: 100px;">
+        <p>Score:</p>
+        <ol id="scoreOl"></ol>
+    </div> -->
+    </div>
+
+    <script>
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      const canvasW = canvas.width;
+      const canvasH = canvas.height;
+
+      drawBall();
+      drawLeftPaddle();
+      drawRightPaddle();
+
+      function drawBall(){
+        ctx.beginPath();
+        ctx.arc(150,150,10,0,2*Math.PI);
+        ctx.stroke();
+        ctx.closePath();
+      }
+
+      function drawLeftPaddle(){
+        ctx.beginPath();
+        ctx.rect(0,canvasH/2-25,5,50);
+        ctx.stroke();
+        ctx.closePath();
+      }
+
+      function drawRightPaddle(){
+        ctx.beginPath();
+        ctx.rect(canvasW-5,canvasH/2-25,5,50);
+        ctx.stroke();
+        ctx.closePath();
+      }
+    </script>
+  </body>
+</html>
