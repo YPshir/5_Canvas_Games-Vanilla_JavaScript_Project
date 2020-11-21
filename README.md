@@ -24,44 +24,32 @@ In Breakout, a layer of bricks lines the top third of the screen and the goal is
   
 ## II. Snake
 
-// pic
+<img width="306" alt="2" src="https://user-images.githubusercontent.com/46241467/99876610-851fad80-2c00-11eb-9813-f9aaf9eda2e6.png">  
+
 JavaScript, HTML and CSS grid-based game
 
 
 ### Live Demo
-[Code in CodePen](https://codepen.io/shir-izhak/pen/Pozxbmx) // leshanot
+[Code in CodePen](https://codepen.io/shir-izhak/pen/LYZKzMK) 
 
 ### ABOUTE
 The player controls a long, thin creature, resembling a snake, which roams around on a bordered plane, picking up food (or some other item), trying to avoid hitting its own tail or the "walls" that surround the playing area. Each time the snake eats a piece of food, its tail grows longer, making the game increasingly difficult. The user controls the direction of the snake's head (up, down, left, or right), and the snake's body follows. The player cannot stop the snake from moving while the game is in progress.
  
   
-## III. Connect-Four
+## III. PingPong
+//pic
 JavaScript, HTML and CSS grid-based game
 
 
 ### Live Demo
-[Code in CodePen](https://codepen.io/shir-izhak/pen/RwRdNXR)
+[Code in CodePen](https://codepen.io/shir-izhak/pen/RwRdNXR) // leshanot
 
 ### ABOUTE
-Connect Four is a two-player board game in which the players first choose a color and then take turns dropping one colored disc from the top into a seven-column, six-row vertically suspended grid. The pieces fall straight down, occupying the lowest available space within the column. The objective of the game is to be the first to form a horizontal, vertical, or diagonal line of four of one's own discs.
+Pong is a two-dimensional sports game that simulates table tennis. The player controls an in-game paddle by moving it vertically across the left or right side of the screen.  Players use the paddles to hit a ball back and forth. The goal is for each player to reach eleven points before the opponent; points are earned when one fails to return the ball to the other.
  
-#### Rules 
-* You will start as player One and take your go as player One
-* You will not be allowed to go in squares that are not at the bottom of the grid, or do not have a taken square under it
-* Once your go is taken and you did not win, It will be player Two's go
-* he gamer will continue until a winning combination of four is reached by player One or player Two, or until the grid is full and no winning combination was found
 
-### Features:
-##### HTML
-##### CSS
-##### JavaScript:
-###### for loops
-###### addEventListener()
-###### setInterval()
-###### document.querySelector()
-###### arrow functions
-###### classList.contains()
-###### classList.add()  
+
+
 
 
   
