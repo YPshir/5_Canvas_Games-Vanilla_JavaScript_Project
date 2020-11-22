@@ -26,27 +26,107 @@
       const canvasW = canvas.width;
       const canvasH = canvas.height;
 
+      let ball = { x: 150, y: 150, r: 10, dx: 2, dy: 1 };
+      let paddle = { h: 50, w: 5 };
+      let leftPaddle = { x: 0, y: canvasH / 2 - 25 };
+      let rightPaddle = { x: canvasW - 5, y: canvasH / 2 - 25 };
+      let score = 0;
+      let increment = 0.2;
       drawBall();
       drawLeftPaddle();
       drawRightPaddle();
+      drawScore();
+      drawCenterLine();
+      moveBall();
+      moveLeftPaddle();
 
-      function drawBall(){
+      function setInitialVariables() {
+        ball = { x: 150, y: 150, r: 10, dx: 2, dy: 1 };
+        leftPaddle = { x: 0, y: canvasH / 2 - 25 };
+        rightPaddle = { x: canvasW - 5, y: canvasH / 2 - 25 };
+        score = 0;
+      }
+
+      function moveLeftPaddle() {
+        document.addEventListener("mousemove", (e) => {
+          leftPaddle.y = e.screenY - 220;
+        });
+      }
+
+      function detectCollision() {
+        // detect right paddle collision
+        if (ball.x > rightPaddle.x - ball.r) {
+          ball.dx = -ball.dx;
+        }
+
+        // detect left paddle collision
+        if (
+          ball.x < 0 + ball.r + paddle.w &&
+          ball.y > leftPaddle.y &&
+          ball.y < leftPaddle.y + paddle.h
+        ) {
+          ball.dx = -ball.dx + 2 * increment;
+          ball.dy += increment;
+          score++;
+        }
+
+        // detect bottom collision or top collision
+        if (ball.y > canvasH - ball.r || ball.y < 0 + ball.r) {
+          ball.dy = -ball.dy;
+        }
+
+        // detect left collision
+        if (ball.x < 0 + ball.r) {
+          alert("game over");
+          setInitialVariables();
+        }
+      }
+
+      function moveBall() {
+        ball.x += ball.dx;
+        ball.y += ball.dy;
+        rightPaddle.y = ball.y - paddle.h / 2;
+        ctx.clearRect(0, 0, canvasW, canvasH);
+        detectCollision();
+        drawBall();
+        drawLeftPaddle();
+        drawRightPaddle();
+        drawScore();
+        drawCenterLine();
+        requestAnimationFrame(moveBall);
+      }
+
+      function drawBall() {
         ctx.beginPath();
-        ctx.arc(150,150,10,0,2*Math.PI);
+        ctx.arc(ball.x, ball.y, ball.r, 0, 2 * Math.PI);
         ctx.stroke();
         ctx.closePath();
       }
 
-      function drawLeftPaddle(){
+      function drawLeftPaddle() {
         ctx.beginPath();
-        ctx.rect(0,canvasH/2-25,5,50);
+        ctx.rect(leftPaddle.x, leftPaddle.y, paddle.w, paddle.h);
         ctx.stroke();
         ctx.closePath();
       }
 
-      function drawRightPaddle(){
+      function drawRightPaddle() {
         ctx.beginPath();
-        ctx.rect(canvasW-5,canvasH/2-25,5,50);
+        ctx.rect(rightPaddle.x, rightPaddle.y, paddle.w, paddle.h);
+        ctx.stroke();
+        ctx.closePath();
+      }
+
+      function drawScore(){
+        ctx.beginPath();
+        ctx.fillText("Score: " + score, 10, 10);
+        ctx.closePath();
+      }
+
+      function drawCenterLine(){
+        ctx.beginPath();
+        ctx.moveTo(canvasW/2 , 0);
+        ctx.lineTo(canvasW/2,canvasH);
         ctx.stroke();
         ctx.closePath();
       }
