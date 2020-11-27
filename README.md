@@ -26,7 +26,7 @@ In Breakout, a layer of bricks lines the top third of the screen and the goal is
 
 <img width="306" alt="2" src="https://user-images.githubusercontent.com/46241467/99876610-851fad80-2c00-11eb-9813-f9aaf9eda2e6.png">  
 
-JavaScript, HTML and CSS grid-based game
+HTML , CSS and Vanilla JavaScript game
 
 
 ### Live Demo
@@ -38,7 +38,7 @@ The player controls a long, thin creature, resembling a snake, which roams aroun
   
 ## III. PingPong
 <img width="251" alt="3" src="https://user-images.githubusercontent.com/46241467/99902447-903d1100-2cc6-11eb-9fc6-98304bdf798b.png">
-JavaScript, HTML and CSS grid-based game
+HTML , CSS and Vanilla JavaScript game
 
 
 ### Live Demo
@@ -55,12 +55,12 @@ Pong is a two-dimensional sports game that simulates table tennis. The player co
   
 
 ## IV. Ball Fall
-// pic
-JavaScript, HTML and CSS grid-based game
+<img width="233" alt="4" src="https://user-images.githubusercontent.com/46241467/100481750-ced72f00-30fd-11eb-9351-41af471adb2d.png">  
+HTML , CSS and Vanilla JavaScript game
 
 
 ### Live Demo
-[Code in CodePen](https://codepen.io/shir-izhak/pen/RwRdodj) // leshanot
+[Code in CodePen](https://codepen.io/shir-izhak/pen/rNMNXBZ) 
 
 ### ABOUTE
 Ball Fall is a score-attack platforming game where you control a ball falling down an endless hallway. Platform between floors as you try to survive for as long as possible to achieve high-scores and survive the fall.
@@ -70,7 +70,7 @@ Ball Fall is a score-attack platforming game where you control a ball falling do
   
 ## V. Tic Tac Toe
 // pic
-JavaScript, HTML and CSS grid-based game
+HTML , CSS and Vanilla JavaScript game
 
 
 ### Live Demo
