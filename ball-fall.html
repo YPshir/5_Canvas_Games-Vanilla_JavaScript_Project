@@ -1,61 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ball Fall</title>
-</head>
-<body>
-    <canvas id="canvas" width="300" height="300" style="border: 1px solid black;"></canvas>
+  </head>
+  <body>
+    <canvas
+      id="canvas"
+      width="300"
+      height="300"
+      style="border: 1px solid black"
+    ></canvas>
 
     <script>
-        const canvas = document.getElementById("canvas");
-        const ctx = canvas.getContext("2d");
-        const canvasH = canvas.height;
-        const canvasW = canvas.width;
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      const canvasH = canvas.height;
+      const canvasW = canvas.width;
 
-        let ball = {x:150, y:100, r:5};
-        let platformH = 10;
-        let platformW = canvasW;
+      let ball = { x: 150, y: 0, r: 5 };
+      let platformH = 10;
+      let platformW = canvasW;
+      let platformsDiff = 50;
+      let platformSpeed = 1;
+      let leftPressed = (rightPressed = false);
+      let moveSpeed = 2;
+      let interval = (scoreInterval = null);
+      let score = 0;
+      let gravity = 0.6;
+      let dropSpeed = 1;
 
-        function randomHoleX(){
-            return Math.floor(Math.random() * canvasW-30); // 30 = holeX
-        }
+      function randomHoleX() {
+        return Math.floor(Math.random() * (canvasW - 30)); // 30 = holeX
+      }
 
-        let platforms = [{x: 0, y:150, holeX:randomHoleX(), holeW:20},{x: 0, y:200, holeX:randomHoleX(), holeW:20},{x: 0, y:250,  holeX:randomHoleX(), holeW:20}];
+      let platforms = [{ x: 0, y: canvasH, holeX: randomHoleX(), holeW: 20 }];
 
-        drawBall();
-        drawPlatforms();
+      drawBall();
+      drawPlatforms();
+      movePlatforms();
+      navigateBall();
+      drawScore();
 
-        function drawPlatforms(){
-            platforms.forEach(platform=>{
-                createPlatform(platform);
-                createHole(platform);
-            })
-            function createPlatform(platform){
-                ctx.beginPath();
-                ctx.rect(platform.x, platform.y, platformW, platformH);
-                ctx.fillStyle = "black";
-                ctx.fill();
-                ctx.closePath();  
+
+      function movePlatforms() {
+        let count = 0;
+        if (!interval) {
+          interval = setInterval(() => {
+            checkGameOver();
+            if (count === Math.floor(platformsDiff / platformSpeed)) {
+              if (platforms.length > 7) {
+                platforms.splice(0, 1);
+              }
+              addNewPlatform();
+              count = 0;
             }
-
-            function createHole(platform){
-                ctx.beginPath();
-                ctx.rect(platform.holeX, platform.y, platform.holeW, platformH);
-                ctx.fillStyle = "white";
-                ctx.fill();
-                ctx.closePath();  
+            platforms.forEach((platform) => {
+              platform.y -= platformSpeed;
+            });
+            const closest = platforms.find(
+              (platform) =>
+                ball.y < platform.y + 10 && ball.y > platform.y - ball.r
+            );
+            if (closest) {
+              holdAndDrop(closest);
+            } else {
+              dropSpeed = dropSpeed + gravity;
+              ball.y += dropSpeed;
             }
+            ctx.clearRect(0, 0, canvasW, canvasH);
+            drawPlatforms();
+            drawBall();
+            drawScore();
+            count++;
+          }, 20);
+        }
+      }
+      function checkGameOver() {
+        if (ball.y < 0) {
+          alert("Game Over! Your Score is: " + score);
+          reset();
+        }
+      }
+
+      function reset() {
+        ball = { x: 150, y: 0, r: 5 };
+        platforms = [{ x: 0, y: canvasH, holeX: randomHoleX(), holeW: 20 }];
+        clearInterval(interval);
+        interval = null;
+        score = 0;
+        clearInterval(scoreInterval);
+        scoreInterval = null;
+        movePlatforms();
+      }
+
+      function addNewPlatform() {
+        const lastPlatform = platforms[platforms.length - 1];
+        platforms.push({
+          x: 0,
+          y: lastPlatform.y + platformsDiff,
+          holeX: randomHoleX(),
+          holeW: 20,
+        });
+      }
+
+      function drawPlatforms() {
+        platforms.forEach((platform) => {
+          createPlatform(platform);
+          createHole(platform);
+        });
+
+        function createPlatform(platform) {
+          ctx.beginPath();
+          ctx.rect(platform.x, platform.y, platformW, platformH);
+          ctx.fillStyle = "black";
+          ctx.fill();
+          ctx.closePath();
         }
 
-        function drawBall(){
-            ctx.beginPath();
-            ctx.arc(ball.x, ball.y, ball.r, 0 , 2*Math.PI);
-            ctx.fillStyle = "brown";
-            ctx.fill();
-            ctx.closePath();
+        function createHole(platform) {
+          ctx.beginPath();
+          ctx.rect(platform.holeX, platform.y, platform.holeW, platformH);
+          ctx.fillStyle = "white";
+          ctx.fill();
+          ctx.closePath();
         }
+      }
+
+      function holdAndDrop(closest) {
+        if (ball.y > closest.y - ball.r) {
+          if (
+            ball.x > closest.holeX &&
+            ball.x < closest.holeX + closest.holeW
+          ) {
+            ball.y += 1;
+          } else {
+            ball.y = closest.y - ball.r;
+          }
+        }
+      }
+
+      function drawBall() {
+        // check navigation
+        if (leftPressed && ball.x > 0 + ball.r) {
+          ball.x -= moveSpeed;
+        }
+
+        if (rightPressed && ball.x < canvasW - ball.r) {
+          ball.x += moveSpeed;
+        }
+
+        ctx.beginPath();
+    
+        ctx.arc(ball.x, ball.y, ball.r, 0, 2 * Math.PI);
+        ctx.fillStyle = "brown";
+        ctx.fill();
+
+        // const img = new Image();
+        // img.src = "./ball.png";
+        // ctx.drawImage(img, ball.x, ball.y,10, 10);
+        ctx.closePath();
+      }
+
+      function drawScore() {
+        ctx.beginPath();
+        ctx.fillText("Score: " + score, 10, 10);
+        ctx.closePath();
+        if (!scoreInterval) {
+        scoreInterval = setInterval(() => {
+          score++;
+        }, 1000);
+      }
+      }
+
+      function navigateBall() {
+        document.addEventListener("keydown", (e) => {
+          if (e.getModifierState("Control")) {
+            if (e.key === "ArrowLeft") {
+              moveSpeed = 10;
+            }
+            if (e.key === "ArrowRight") {
+              moveSpeed = 10;
+            }
+          }
+          if (e.key === "ArrowLeft") {
+            leftPressed = true;
+          }
+          if (e.key === "ArrowRight") {
+            rightPressed = true;
+          }
+        });
+        document.addEventListener("keyup", (e) => {
+          if (e.key === "ArrowLeft") {
+            leftPressed = false;
+          }
+          if (e.key === "ArrowRight") {
+            rightPressed = false;
+          }
+          moveSpeed = 2;
+        });
+      }
     </script>
-</body>
+  </body>
 </html>
