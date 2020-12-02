@@ -1,12 +1,9 @@
 
-# IN PROCESS!!!
-
-
 # 5 Canvas Games - Vanilla JavaScript Project
 HTML , CSS and Vanilla JavaScript - 5 basic Games For learning purpose  
 [Click for display live](https://codepen.io/collection/DoVZQG) 
 
-![Webp net-gifmaker (1)](https://user-images.githubusercontent.com/46241467/99301171-3bc50c00-2856-11eb-8fb2-9565e7cfabc8.gif)
+![Webp net-gifmaker (2)](https://user-images.githubusercontent.com/46241467/100941772-d7b37080-3502-11eb-8cd9-df90682f45a1.gif)
 
 
 ## I. Breakout Game
@@ -69,12 +66,12 @@ Ball Fall is a score-attack platforming game where you control a ball falling do
 
   
 ## V. Tic Tac Toe
-// pic
-HTML , CSS and Vanilla JavaScript game
+<img width="415" alt="5" src="https://user-images.githubusercontent.com/46241467/100941450-50fe9380-3502-11eb-9336-85ebd0997250.png">  
+HTML , CSS and Vanilla JavaScript game (NOT Canvas Based)
 
 
 ### Live Demo
-[Code in CodePen](https://codepen.io/shir-izhak/pen/qBNvRMx) // leshnot
+[Code in CodePen](https://codepen.io/shir-izhak/pen/yLaYRrW) 
 ### ABOUTE
 tic tac toe is a paper-and-pencil game for two players, X and O, who take turns marking the spaces in a 3×3 grid. The player who succeeds in placing three of their marks in a horizontal, vertical, or diagonal row is the winner. It is a solved game with a forced draw assuming best play from both players.
 
