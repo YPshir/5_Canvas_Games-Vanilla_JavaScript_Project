@@ -1,11 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tic Tac Toe</title>
-</head>
-<body>
-    
-</body>
+    <style>
+      table {
+        border-collapse: collapse;
+      }
+      section {
+        display: flex;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+      }
+      td {
+        border: 1px solid black;
+        width: 100px;
+        height: 100px;
+        cursor: pointer;
+        text-align: center;
+      }
+      table tr:first-child td {
+        border-top: none;
+      }
+      table tr:last-child td {
+        border-bottom: none;
+      }
+      table td:first-child {
+        border-left: none;
+      }
+      table td:last-child {
+        border-right: none;
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <p id="scoreX"></p>
+      <table>
+        <tr>
+          <td class="cell"></td>
+          <td class="cell"></td>
+          <td class="cell"></td>
+        </tr>
+        <tr>
+          <td class="cell"></td>
+          <td class="cell"></td>
+          <td class="cell"></td>
+        </tr>
+        <tr>
+          <td class="cell"></td>
+          <td class="cell"></td>
+          <td class="cell"></td>
+        </tr>
+      </table>
+      <p id="scoreO">Player O Score:</p>
+    </section>
+    <script>
+      let player = "X";
+      let score = { X: 0, O: 0 };
+      const cells = document.querySelectorAll(".cell");
+      cells.forEach((cell) => {
+        cell.addEventListener("click", handleClick);
+      });
+
+      startGame();
+
+      function handleClick(e) {
+        if (e.target.innerText === "") {
+          e.target.innerText = player;
+          checkWinner();
+          // checkDraw();
+          switchPlayer();
+        }
+      }
+
+      function startGame() {
+        const scoreX = document.querySelector("#scoreX");
+        const scoreO = document.querySelector("#scoreO");
+        scoreX.innerText = `Player X Score: ${score.X}`;
+        scoreO.innerText = `Player O Score: ${score.O}`;
+        cells.forEach((cell) => (cell.innerText = ""));
+      }
+
+      function switchPlayer() {
+        player = player === "X" ? "O" : "X";
+      }
+
+      function checkWinner() {
+        const winCombination = [
+          [0, 1, 2],
+          [3, 4, 5],
+          [6, 7, 8],
+          [0, 4, 8],
+          [2, 4, 6],
+          [0, 3, 6],
+          [1, 4, 7],
+          [2, 5, 8],
+        ];
+        const matched = winCombination.some((comb) =>
+          comb.every((ci) => cells[ci].innerText == player)
+        );
+        console.log(matched);
+        if (matched) {
+          alert(`Player ${player} WON!`);
+          if (player === 'X'){
+              score.X += 1;
+          }
+          if (player === 'O'){
+              score.O += 1;
+          }
+          startGame();
+        } else {
+          const cellsArray = Array.from(cells);
+          if (cellsArray.every((cell) => cell.innerText !== "")) {
+            alert("matched draw");
+            startGame();
+          }
+        }
+      }
+    </script>
+  </body>
 </html>
